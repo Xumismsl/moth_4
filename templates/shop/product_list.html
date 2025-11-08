@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Продукты</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f8f8f8; padding: 20px; }
+        h1 { color: #333; }
+        ul { list-style: none; padding: 0; }
+        li { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>Список продуктов</h1>
+    <ul>
+        {% for product in products %}
+            <li>
+                {{ product.name }} — {{ product.price }} руб.
+                (Категория: {{ product.category.name }})
+            </li>
+        {% empty %}
+            <li>Продукты не найдены</li>
+        {% endfor %}
+    </ul>
+    <p><a href="{% url 'category_list' %}">← Вернуться к списку категорий</a></p>
+</body>
+</html>
