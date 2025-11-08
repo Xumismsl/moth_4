@@ -3,60 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ book_id.title }}</title>
+    <title>{{ book.title }}</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            margin: 0;
-            padding: 0 20px;
-        }
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-        }
-        .book-image {
-            display: block;
-            margin: 20px auto;
-            max-width: 100%;
-            border-radius: 5px;
-        }
-        .book-info {
-            margin-top: 20px;
-            line-height: 1.6;
-        }
-        .book-info p {
-            margin: 8px 0;
-        }
-        .label {
-            font-weight: bold;
-            color: #555;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f9f9f9; color: #333; margin: 0; padding: 0 20px; }
+        .container { max-width: 900px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #2c3e50; }
+        .book-image { display: block; margin: 20px auto; max-width: 100%; border-radius: 5px; }
+        .book-info { margin-top: 20px; line-height: 1.6; }
+        .book-info p { margin: 8px 0; }
+        .label { font-weight: bold; color: #555; }
+        .reviews { margin-top: 30px; }
+        .review { border-top: 1px solid #ddd; padding: 10px 0; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>{{ book_id.title }}</h1>
-        <img src="{{ book_id.image.url }}" alt="{{ book_id.title }}" class="book-image">
-        
+        <h1>{{ book.title }}</h1>
+        <img src="{{ book.image.url }}" alt="{{ book.title }}" class="book-image">
+
         <div class="book-info">
-            <p><span class="label">Описание:</span> {{ book_id.description }}</p>
-            <p><span class="label">Автор:</span> {{ book_id.director }}</p>
-            <p><span class="label">Жанр:</span> {{ book_id.genre }}</p>
-            <p><span class="label">Страна:</span> {{ book_id.country }}</p>
-            <p><span class="label">Количество страниц:</span> {{ book_id.pages }}</p>
-            <p><span class="label">Возрастное ограничение:</span> {{ book_id.age }}+</p>
-            <p><span class="label">Язык:</span> {{ book_id.language }}</p>
-            <p><span class="label">Издательство:</span> {{ book_id.publishing_house }}</p>
+            <p><span class="label">Описание:</span> {{ book.description }}</p>
+            <p><span class="label">Автор:</span> {{ book.director }}</p>
+            <p><span class="label">Жанр:</span> {{ book.genre }}</p>
+            <p><span class="label">Страна:</span> {{ book.country }}</p>
+            <p><span class="label">Страницы:</span> {{ book.pages }}</p>
+            <p><span class="label">Возрастное ограничение:</span> {{ book.age }}+</p>
+            <p><span class="label">Язык:</span> {{ book.language }}</p>
+            <p><span class="label">Издательство:</span> {{ book.publishing_house }}</p>
+            <p><span class="label">Средняя оценка:</span> {{ avg }}</p>
+        </div>
+
+        <div class="reviews">
+            <h2>Отзывы</h2>
+            {% if book.reviews.all %}
+                {% for review in book.reviews.all %}
+                    <div class="review">
+                        <p><strong>{{ review.name_user.username }}</strong> - Оценка: {{ review.mark }}/5</p>
+                        <p>{{ review.comments }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Пока нет отзывов.</p>
+            {% endif %}
         </div>
     </div>
 </body>
