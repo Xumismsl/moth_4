@@ -1,0 +1,37 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список заказов</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+{% include 'header.html' %}
+
+<h1>Список заказов</h1>
+
+<ul>
+    {% for order in orders %}
+    <li>
+        <p><strong>Книга:</strong> {{ order.book.title }}</p>
+        <p><strong>Способ оплаты:</strong> {{ order.payment_method }}</p>
+        <p><strong>Способ доставки:</strong> {{ order.delivery_method }}</p>
+        <p><strong>Адрес:</strong> {{ order.address }}</p>
+        <p><strong>Телефон:</strong> {{ order.telephone }}</p>
+
+        <a href="{% url 'update_order' order.id %}">Изменить</a> |
+        <a href="{% url 'delete_order' order.id %}">Удалить</a>
+    </li>
+    {% empty %}
+    <li>Заказов пока нет.</li>
+    {% endfor %}
+</ul>
+
+{% include 'footer.html' %}
+
+</body>
+</html>
